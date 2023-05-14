@@ -45,7 +45,6 @@ class Staff(models.Model):
     def __str__(self):
         return self.name
 
-
 class Department(models.Model):
     ''' 部门表'''
     title = models.CharField(verbose_name='部门名称',max_length=32)
@@ -79,7 +78,6 @@ class Shop(models.Model):
     def __str__(self):
         return self.title
 
-
 class Site(models.Model):
     '''
     站点表
@@ -105,4 +103,36 @@ class Site(models.Model):
     def __str__(self):
         return self.site_choices[self.site-1][1] + self.front_host
 
+class Admin(models.Model):
+    '''管理员'''
+    username = models.CharField(verbose_name='用户名',max_length=32)
+    password = models.CharField(verbose_name='密码',max_length=64)
+    # code = models.CharField(verbose_name='验证码',max_length=32)
+
+    def __str__(self):
+        return self.username
+
+class Task(models.Model):
+    '''任务'''
+    title = models.CharField(verbose_name='标题',max_length=64)
+    detail = models.TextField(verbose_name='任务详情')
+    level_choices = (
+        (1,'紧急'),
+        (2,'重要'),
+        (3,'临时'),
+    )
+    level = models.SmallIntegerField(verbose_name='级别',choices=level_choices,default=1)
+    user = models.ForeignKey(verbose_name='负责人',to = 'Admin',on_delete=models.CASCADE)
+
+class Order(models.Model):
+    oid = models.CharField(verbose_name='订单号',max_length=64)
+    title = models.CharField(verbose_name='名称',max_length=64)
+    price = models.IntegerField(verbose_name='价格')
+    status_choices = (
+        (1,"待支付"),
+        (2,"支付成功"),
+        (3,"支付失败")
+    )
+    status = models.IntegerField(verbose_name='状态',choices=status_choices,default=1)
+    admin = models.ForeignKey(verbose_name='管理员',to = "Admin",on_delete=models.CASCADE)
 

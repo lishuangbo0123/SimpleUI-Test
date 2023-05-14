@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+import app01.middleware.middleware
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -48,6 +50,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    # 'app01.middleware.middleware.M1',
 ]
 
 ROOT_URLCONF = "djangoProject1.urls"

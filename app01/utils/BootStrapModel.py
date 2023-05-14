@@ -1,10 +1,9 @@
 from django import forms
-class BootStrapModelForm(forms.ModelForm):
 
-
+class BootStrap:
     def __init__(self,*args,**kwargs):
         super().__init__(*args,**kwargs)
-        #循环找到所有的插件，添加了class="form-control"
+        #循环找到所有的字段的样式，添加了class="form-control"
         for name,field in self.fields.items():
             if field.widget.attrs:
                 field.widget.attrs['class'] = "form-control"
@@ -12,3 +11,10 @@ class BootStrapModelForm(forms.ModelForm):
             else:
                 field.widget.attrs = {"class":"form-control",
                                       "placeholder":field.label}
+
+class BootStrapModelForm(BootStrap,forms.ModelForm):
+    pass
+
+class BootStrapForm(BootStrap,forms.Form):
+    pass
+
